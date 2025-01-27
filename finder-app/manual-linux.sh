@@ -87,11 +87,13 @@ ${CROSS_COMPILE}readelf -a "${OUTDIR}/rootfs/bin/busybox" | grep "Shared library
 # ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # [DONE] TODO: Add library dependencies to rootfs
+SYSROOT=$(${CROSS_COMPILE}gcc -print-sysroot)
+
 cd "$OUTDIR/rootfs"
-cp -L /opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc.so.6 lib/
-cp -L /opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm.so.6 lib/
-cp -L /opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv.so.2 lib/
-cp -L /opt/toolchains/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib/ld-linux-aarch64.so.1 lib/
+cp -L $SYSROOT/lib64/libc.so.6 lib/
+cp -L $SYSROOT/lib64/libm.so.6 lib/
+cp -L $SYSROOT/lib64/libresolv.so.2 lib/
+cp -L $SYSROOT/lib/ld-linux-aarch64.so.1 lib/
 
 # Create lib64 and copy libraries there too
 mkdir -p lib64
